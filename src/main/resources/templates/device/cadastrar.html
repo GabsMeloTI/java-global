@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar aparelho</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Cadastrar aparelho</h1>
+
+    <div th:if="${msg}" class="alert alert-success" role="alert">
+        <span th:text="${msg}"></span>
+    </div>
+
+    <form th:action="@{/device/save}" th:object="${device}" method="post">
+        <div class="form-group">
+            <label for="name">Nome do aparelho:</label>
+            <input type="text" id="name" class="form-control" th:field="*{name}" placeholder="Digite o nome do aparelho" required>
+        </div>
+
+
+        <!-- Seção para cadastrar DeviceInfo -->
+        <div class="form-group">
+            <label for="voltage">Tensão (Voltage):</label>
+            <input type="number" id="voltage" class="form-control" th:field="*{deviceInfo[0].voltage}" placeholder="Digite a tensão do aparelho" step="0.1" required>
+        </div>
+
+        <div class="form-group">
+            <label for="energyLevel">Nível de Energia (Energy Level):</label>
+            <input type="number" id="energyLevel" class="form-control" th:field="*{deviceInfo[0].energyLevel}" placeholder="Digite o nível de energia" step="0.1" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+
+    <a href="/" class="btn btn-secondary mt-3">Voltar para a página principal</a>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

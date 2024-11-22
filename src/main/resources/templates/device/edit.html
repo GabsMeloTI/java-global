@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Aparelho</title>
+  <!-- Link para o CSS do Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5" layout:fragment="conteudo">
+  <h1 class="text-center mb-4">Edição de Aparelho</h1>
+
+  <form th:action="@{/device/edit}" method="post" th:object="${device}">
+    <!-- Campo oculto para o id do dispositivo -->
+    <input type="hidden" th:field="*{id}">
+
+    <!-- Exibição de erros -->
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+      <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+    </div>
+
+    <!-- Campo para o título do aparelho -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Título</label>
+      <input type="text" id="name" th:field="*{name}" class="form-control">
+
+      <!-- Exibição de erros específicos do campo 'name' -->
+      <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
+    </div>
+
+    <!-- Botão para editar o aparelho -->
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-success">Editar</button>
+    </div>
+
+    <div class="d-flex justify-content-center mt-3">
+      <a href="/home" class="btn btn-secondary">Voltar para a Tela Inicial</a>
+    </div>
+  </form>
+</div>
+
+<!-- Script do Bootstrap (necessário para o funcionamento de alguns componentes) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

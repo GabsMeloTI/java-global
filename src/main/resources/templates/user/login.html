@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/login}" method="post">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password">
+  </div>
+  <div>
+    <button type="submit">Entrar</button>
+  </div>
+  <!-- Botão para direcionar para a página de registro -->
+  <div>
+    <a href="/register" class="btn">Registrar</a>
+  </div>
+
+</form>
+</body>
+</html>

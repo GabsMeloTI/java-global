@@ -2,14 +2,15 @@ package br.com.gs.Energy.controller;
 
 import br.com.gs.Energy.model.Device;
 import br.com.gs.Energy.repository.DeviceRepository;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -25,6 +26,8 @@ public class DeviceController {
     }
     @PostMapping("save")
     @Transactional
+    @Operation(summary = "Cadastro de Post",
+            description = "Cadastra um Post")
     public String saveDevice(Device device, RedirectAttributes redirectAttributes) {
         deviceRepository.save(device);
         redirectAttributes.addFlashAttribute("msg", "Aparelho cadastrado com sucesso!!!");
@@ -32,6 +35,7 @@ public class DeviceController {
     }
 
     @GetMapping("listar")
+
     public String listar(Model model){
         var devices = deviceRepository.findAll();
         System.out.println(devices);
@@ -40,6 +44,9 @@ public class DeviceController {
     }
 
     @GetMapping("edit/{id}")
+    @Parameters({
+            @Parameter(name="id", description = "Pesquisa post por id", required = true)
+    })
     public String editar(@PathVariable("id")Integer id, Model model){
         model.addAttribute("device", deviceRepository.findById(id));
         return "device/edit";
@@ -53,8 +60,10 @@ public class DeviceController {
         return "redirect:/device/listar";
     }
 
+
     @PostMapping("delete")
-    public String delete(Integer id, RedirectAttributes redirectAttributes) {
+    @Operation(summary = "Exclui um dispositivo", description = "Exclui um dispositivo baseado no ID fornecido.")
+    public String delete( Integer id, RedirectAttributes redirectAttributes) {
         deviceRepository.deleteById(id);
         redirectAttributes.addFlashAttribute("msg", "Livro removido!");
         return "redirect:/device/listar";
